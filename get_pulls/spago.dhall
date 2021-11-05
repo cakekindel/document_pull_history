@@ -14,27 +14,21 @@ to generate this file without the comments in this block.
 , dependencies =
   [ "aff"
   , "arrays"
-  , "bifunctors"
   , "console"
   , "effect"
   , "either"
-  , "encoding"
-  , "exceptions"
   , "foldable-traversable"
-  , "foreign"
+  , "github"
   , "maybe"
-  , "milkis"
   , "node-buffer"
   , "node-fs"
   , "node-path"
   , "node-process"
-  , "node-url"
   , "partial"
   , "prelude"
   , "psci-support"
   , "simple-json"
   , "strings"
-  , "unsafe-coerce"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs" ]
