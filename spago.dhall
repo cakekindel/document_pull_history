@@ -26,13 +26,16 @@ to generate this file without the comments in this block.
   , "milkis"
   , "node-buffer"
   , "node-fs"
+  , "node-path"
   , "node-process"
   , "node-url"
+  , "partial"
   , "prelude"
   , "psci-support"
   , "simple-json"
+  , "strings"
   , "unsafe-coerce"
   ]
 , packages = ./packages.dhall
-, sources = [ "src/**/*.purs", "test/**/*.purs" ]
+, sources = [ "src/**/*.purs" ]
 }

@@ -32,7 +32,7 @@ type Comment = { pull_request_review_id :: Number
                , created_at :: String
                }
 
-getComments :: RepoId -> BasicAuth -> Number -> Rep (Array Comment)
+getComments :: RepoId -> BasicAuth -> Number -> Aff.Aff (Rep (Array Comment))
 getComments repo key pr = get_ [] 1 repo pr key
   where
   perPage = 30

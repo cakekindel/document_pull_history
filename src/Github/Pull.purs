@@ -37,7 +37,7 @@ type Pull = { url        :: String
             , head       :: Ref
             }
 
-get :: RepoId -> BasicAuth -> Rep (Array Pull)
+get :: RepoId -> BasicAuth -> Aff.Aff(Rep (Array Pull))
 get repo key = getPulls_ [] 1 repo key
   where
   perPage = 30

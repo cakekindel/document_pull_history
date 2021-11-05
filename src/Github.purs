@@ -40,11 +40,11 @@ instance showErr :: Show Err where
   show (HttpErr _)          = "HttpErr _"
   show (HttpStatusErr code) = "HttpStatusErr "<>show code
 
-type Rep ok = Aff.Aff (Either Err ok)
+type Rep ok = Either Err ok
 
 type User = { login :: String, html_url :: String }
 
-_getRep :: forall t. Json.ReadForeign t => Either Error M.Response -> Rep t
+_getRep :: forall t. Json.ReadForeign t => Either Error M.Response -> Aff.Aff (Rep t)
 _getRep (Left e)    = pure $ Left (HttpErr e)
 _getRep (Right rep) = do
                         let code = M.statusCode rep
