@@ -28,7 +28,7 @@ renderSpan span = joinWith " " (span <#> renderText)
 
 renderText :: Text -> String
 renderText (Text {value, styles}) = let shouldEscape = head styles /= Just Code
-                                     in foldl applyStyle (if shouldEscape then escape value else value) styles
+                                     in foldl applyStyle value styles
 
 renderListEntries :: Int -> String -> Array Entry -> String
 renderListEntries lvl prefix entries = entries <#> renderListEntry lvl prefix # joinWith "\n"
@@ -49,6 +49,7 @@ applyStyle str Italic      = "_"<>str<>"_"
 applyStyle str Code        = "`"<>str<>"`"
 applyStyle str (Link href) = "["<>str<>"]("<>href<>")"
 
+-- Unused
 escape :: String -> String
 escape str = let escapeCharMaybe char = findMap (\{reserved, escaped} -> if reserved == char then Just escaped else Nothing) reservedChars
                  escapeChar char = maybe char identity (escapeCharMaybe char)

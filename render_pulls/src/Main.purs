@@ -14,7 +14,7 @@ import Node.Encoding (Encoding(UTF8))
 import Node.FS.Sync as FS
 
 import Data.String (replace, Pattern(..), Replacement(..))
-import Data.String.Utils (padStart)
+import Data.String.Padding (padStart)
 import Data.Either (Either(..))
 import Data.Maybe (maybe, Maybe(..), isNothing)
 import Data.Array (singleton, filter)
@@ -68,7 +68,7 @@ main = do
 
 pullDocument :: PullAndComments -> MD.Document
 pullDocument {pull, comments} =
-  let pullNumber = pull.number # floor # show # padStart 5 "0"
+  let pullNumber = pull.number # floor # show # padStart 5 '0'
       diffHref = "https://github.com"
   in  MD.md ("pr_"<>pullNumber)
             [ MD.h1 ["Pull Request #"<>(pull.number # floor # show)<>": "<>pull.title # MD.text]
