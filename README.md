@@ -26,5 +26,8 @@ This repo contains 2 scripts:
 
 ### Running render_pulls
 ```sh
-# TODO
+> cd render_pulls
+> OUT_DIR="./foo" \
+  FILE="../get_pulls/out.json" \
+  spago run
 ```
