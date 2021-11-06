@@ -68,7 +68,7 @@ main = do
 
 pullDocument :: PullAndComments -> MD.Document
 pullDocument {pull, comments} =
-  let pullNumber = pull.number # floor # show # padStart 5
+  let pullNumber = pull.number # floor # show # padStart 5 "0"
       diffHref = "https://github.com"
   in  MD.md ("pr_"<>pullNumber)
             [ MD.h1 ["Pull Request #"<>(pull.number # floor # show)<>": "<>pull.title # MD.text]
