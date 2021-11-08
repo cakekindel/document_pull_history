@@ -22,7 +22,7 @@ import Control.Monad.Error.Class (throwError)
 import Data.String (replace, Pattern(..), Replacement(..))
 import Data.String.Padding (padStart)
 import Data.Either (fromRight, Either(..))
-import Data.Maybe (optional, fromJust, maybe, Maybe(..), isNothing)
+import Data.Maybe (isJust, optional, fromJust, maybe, Maybe(..), isNothing)
 import Data.Ord (compare)
 import Data.Foldable (foldl)
 import Data.List (List(Nil))
@@ -109,7 +109,7 @@ pullDocDiff {pull, comments} =
    sequence
    $ Just
    $ [ MD.h2 ["Changes" # MD.text]
-     , MD.span ["Open diff" # MD.text # MD.link diffHref]
+     , MD.collapsible "Click to expand diff" [MD.span ["Open diff" # MD.text # MD.link diffHref]]
      ]
 
 pullDocConversation :: PullAndComments -> Array (Maybe MD.Entry)
@@ -130,8 +130,8 @@ pullDocConversation {pull, comments} =
       let notReply = if isJust comment.in_reply_to_id then Nothing else Just unit
        in catMaybes
           $ [ Just $ MD.h4 [("@"<>comment.user.login) # MD.text]
-            , Just $ MD.span [renderDate comment.created_at # MD.text]
-            , notReply <#> const $ MD.span [comment.path # MD.text # MD.codeInline]
+            , Just $ MD.span [renderDate comment # MD.text]
+            , notReply <#> (const $ MD.span [comment.path # MD.text # MD.codeInline])
             , notReply >>= const comment.diff_hunk <#> \diff -> MD.codeBlock "diff" diff
             , Just $ MD.raw comment.body
             ]

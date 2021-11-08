@@ -8,7 +8,10 @@ import Data.Array (head, replicate, findMap)
 import Data.String (joinWith, split, Pattern(..))
 
 render :: Document -> String
-render (Document _ entries) = entries <#> renderEntry # joinWith "\n\n"
+render (Document _ entries) = renderEntries entries
+
+renderEntries :: Array Entry -> String
+renderEntries es = es <#> renderEntry # joinWith "\n\n"
 
 renderEntry :: Entry -> String
 renderEntry (Raw text)                = text
@@ -20,6 +23,7 @@ renderEntry (H4 span)                 = "#### "<>renderSpan span
 renderEntry (List entries)            = renderListEntries 0 " - "  entries
 renderEntry (OrdList entries)         = renderListEntries 0 " 1. " entries
 renderEntry (CodeBlock codeType text) = "```"<>codeType<>"\n"<>text<>"\n```"
+renderEntry (Collapsible summary details) = "<details><summary>"<>summary<>"</summary>\n\n"<>(renderEntries details)<>"\n</details>"
 renderEntry (Blockquote spans)        =  spans
                                      <#> renderSpan
                                       #  joinWith "\n\n"

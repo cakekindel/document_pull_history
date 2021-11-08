@@ -17,6 +17,7 @@ data Entry = H1 Span
            | OrdList (Array Entry)
            | Blockquote (Array Span)
            | CodeBlock CodeType String
+           | Collapsible String (Array Entry)
            | Raw String
 
 instance showEntry :: Show Entry where
@@ -30,6 +31,7 @@ instance showEntry :: Show Entry where
   show (OrdList entries)  = "OrdList " <> show entries
   show (Blockquote spans) = "Blockquote " <> show spans
   show (CodeBlock ty val) = "CodeBlock " <> show ty <> " " <> show val
+  show (Collapsible summary entries) = "Collapsible " <> show summary <> " " <> show entries
 
 instance showText :: Show Text where
   show (Text record) = "Text " <> show record
@@ -61,6 +63,12 @@ raw = Raw
 
 h1 :: Span -> Entry
 h1 = H1
+
+collapsible :: String -> Array Entry -> Entry
+collapsible = Collapsible
+
+hr :: Entry
+hr = raw "---"
 
 h2 :: Span -> Entry
 h2 = H2
