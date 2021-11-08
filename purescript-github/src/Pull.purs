@@ -22,7 +22,8 @@ import Github (BasicAuth, basicAuthValue, RepoId(..), Err, Rep, _getRep, User)
 import Simple.JSON as Json
 import Effect.Http as Http
 
-type Ref = {ref :: String, sha :: String, user :: User}
+type Repo = {name :: String, full_name :: String}
+type Ref = {repo :: Repo, ref :: String, sha :: String, user :: User}
 type Pull = { url        :: String
             , number     :: Number
             , state      :: String
@@ -40,7 +41,7 @@ type Pull = { url        :: String
 get :: RepoId -> BasicAuth -> Aff.Aff(Rep (Array Pull))
 get repo key = getPulls_ [] 1 repo key
   where
-  perPage = 30
+  perPage = 100
   query page = unsafeCoerce {state: "all", per_page: perPage, page}
   buildUrl page (RepoId {owner, repo}) = "https://api.github.com/repos/"<>owner<>"/"<>repo<>"/pulls?"<>(toQueryString $ query page)
   url page repo = (M.URL $ buildUrl page repo)

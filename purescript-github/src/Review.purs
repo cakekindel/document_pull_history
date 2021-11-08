@@ -24,9 +24,9 @@ import Effect.Http as Http
 
 type Comment = { pull_request_review_id :: Number
                , id :: Number
+               , in_reply_to_id :: Maybe Number
                , diff_hunk :: Maybe String
                , path :: String
-               , in_reply_to_id :: Maybe Number
                , user :: User
                , body :: String
                , created_at :: String
@@ -35,7 +35,7 @@ type Comment = { pull_request_review_id :: Number
 getComments :: RepoId -> BasicAuth -> Number -> Aff.Aff (Rep (Array Comment))
 getComments repo key pr = get_ [] 1 repo pr key
   where
-  perPage = 30
+  perPage = 100
   query page = unsafeCoerce {per_page: perPage, page}
   buildUrl page (RepoId {owner, repo}) = "https://api.github.com/repos/"<>owner<>"/"<>repo<>"/pulls/"<>(show pr)<>"/comments?"<>(toQueryString $ query page)
   url page repo = (M.URL $ buildUrl page repo)

@@ -11,10 +11,12 @@ render :: Document -> String
 render (Document _ entries) = entries <#> renderEntry # joinWith "\n\n"
 
 renderEntry :: Entry -> String
+renderEntry (Raw text)                = text
 renderEntry (Span span)               = renderSpan span
 renderEntry (H1 span)                 = "# "  <>renderSpan span
 renderEntry (H2 span)                 = "## " <>renderSpan span
 renderEntry (H3 span)                 = "### "<>renderSpan span
+renderEntry (H4 span)                 = "#### "<>renderSpan span
 renderEntry (List entries)            = renderListEntries 0 " - "  entries
 renderEntry (OrdList entries)         = renderListEntries 0 " 1. " entries
 renderEntry (CodeBlock codeType text) = "```"<>codeType<>"\n"<>text<>"\n```"

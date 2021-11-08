@@ -11,16 +11,20 @@ type Span = Array Text
 data Entry = H1 Span
            | H2 Span
            | H3 Span
+           | H4 Span
            | Span Span
            | List (Array Entry)
            | OrdList (Array Entry)
            | Blockquote (Array Span)
            | CodeBlock CodeType String
+           | Raw String
 
 instance showEntry :: Show Entry where
+  show (Raw text)         = "Raw " <> show text
   show (H1 span)          = "H1 " <> show span
   show (H2 span)          = "H2 " <> show span
   show (H3 span)          = "H3 " <> show span
+  show (H4 span)          = "H4 " <> show span
   show (Span span)        = "Span " <> show span
   show (List entries)     = "List " <> show entries
   show (OrdList entries)  = "OrdList " <> show entries
@@ -52,6 +56,9 @@ instance eqStyle :: Eq Style where
 md :: String -> Array Entry -> Document
 md name entries = Document name entries
 
+raw :: String -> Entry
+raw = Raw
+
 h1 :: Span -> Entry
 h1 = H1
 
@@ -60,6 +67,9 @@ h2 = H2
 
 h3 :: Span -> Entry
 h3 = H3
+
+h4 :: Span -> Entry
+h4 = H4
 
 blockquote :: Array Span -> Entry
 blockquote = Blockquote
