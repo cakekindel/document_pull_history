@@ -109,7 +109,7 @@ pullDocDiff {pull, comments} =
    sequence
    $ Just
    $ [ MD.h2 ["Changes" # MD.text]
-     , MD.collapsible "Click to expand diff" [MD.span ["Open diff" # MD.text # MD.link diffHref]]
+     , MD.span ["Open diff" # MD.text # MD.link diffHref]
      ]
 
 pullDocConversation :: PullAndComments -> Array (Maybe MD.Entry)
@@ -132,7 +132,7 @@ pullDocConversation {pull, comments} =
           $ [ Just $ MD.h4 [("@"<>comment.user.login) # MD.text]
             , Just $ MD.span [renderDate comment # MD.text]
             , notReply <#> (const $ MD.span [comment.path # MD.text # MD.codeInline])
-            , notReply >>= const comment.diff_hunk <#> \diff -> MD.codeBlock "diff" diff
+            , notReply >>= const comment.diff_hunk <#> \diff -> MD.collapsible "Click to expand highlighted changes" [MD.codeBlock "diff" diff]
             , Just $ MD.raw comment.body
             ]
     reduceComment  comments md comment = case comment.in_reply_to_id of
