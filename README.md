@@ -19,7 +19,7 @@ This repo contains 2 scripts:
 > cd get_pulls
 > GH_TOKEN="<snip>" \
   GH_USERNAME="<snip>" \
-  REPO="imercatus/imercata-backend" \
+  REPO="cakekindel/slack-blocks-rs" \
   OUT_FILE="./out.json" \
   spago run
 ```

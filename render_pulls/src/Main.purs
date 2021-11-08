@@ -100,7 +100,7 @@ pullDocDiff :: PullAndComments -> Array (Maybe MD.Entry)
 pullDocDiff {pull, comments} =
   let
     diffHref = "https://github.com/"
-            <> "sick-viridian-wolf/"
+            <> "cakekindel/"
             <> pull.head.repo.name
             <> "/search?q="
             <> (pull.title # encodeURIComponent # (unsafePartial fromJust))
